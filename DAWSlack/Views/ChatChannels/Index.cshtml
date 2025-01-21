@@ -1,0 +1,76 @@
+﻿@{
+    ViewBag.Title = "Lista Canale";
+}
+@model DAWSlack.Models.ChatChannel
+
+<div class="discord-style">
+    <div class="sidebar">
+        <h3>@ViewBag.Title</h3>
+        <div class="search-bar">
+            <form method="GET">
+                <input type="text" placeholder="Search topics or keywords" name="search" value="@ViewBag.SearchString">
+                <button type="submit">Search</button>
+            </form>
+        </div>
+
+        @foreach (var channel in ViewBag.Channels)
+        {
+            <div class="channel-item" data-id="@channel.Id">
+                <a href="javascript:void(0);">@channel.ChannelName</a>
+
+            </div>
+        }
+
+        <div class="pagination-nav">
+            <ul class="pagination">
+                <li class="page-item">
+                    <a class="page-link" href="@ViewBag.PaginationBaseUrl=1" aria-label="Previous">
+                        &laquo;
+                    </a>
+                </li>
+                @for (int i = 1; i <= ViewBag.lastPage; i++)
+                {
+                    <li class="page-item">
+                        <a class="page-link" href="@ViewBag.PaginationBaseUrl=@i">@i</a>
+                    </li>
+                }
+                <li class="page-item">
+                    <a class="page-link" href="@ViewBag.PaginationBaseUrl=@ViewBag.lastPage" aria-label="Next">
+                        &raquo;
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <a class="btn btn-success" asp-area="" asp-controller="ChatChannels" asp-action="New">Add Channel</a>
+    </div>
+
+    <!-- Container pentru conținutul canalului -->
+    <div class="content" id="content-container">
+        <h3>Conținutul Canalului</h3>
+        <p>Selectează un canal din listă pentru a vedea conținutul.</p>
+    </div>
+</div>
+
+@*
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $(".channel-item").on("click", function () {
+            var channelId = $(this).data("id");
+            if()
+            $.ajax({
+                url: '/ChatChannels/Show/' + channelId,
+                type: 'GET',
+                success: function (response) {
+                    // Înlocuiește doar conținutul containerului
+                    $("#content-container").html(response);
+                },
+                error: function () {
+                    $("#content-container").html("<h3>Eroare</h3><p>Nu s-a putut încărca conținutul canalului.</p>");
+                }
+            });
+        });
+    });
+
+</script>*@
